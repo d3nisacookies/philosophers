@@ -79,12 +79,6 @@ int	init_mutexes(t_params *t)
 		pthread_mutex_destroy(&t->print_mutex);
 		return (printf("death mutex init failed\n"), 1);
 	}
-	if (pthread_mutex_init(&t->fork_lock, NULL) != 0)
-	{
-		pthread_mutex_destroy(&t->print_mutex);
-		pthread_mutex_destroy(&t->death_mutex);
-		return (printf("fork_lock mutex init failed\n"), 1);
-	}
 	return (0);
 }
 
@@ -92,15 +86,21 @@ int	main(int ac, char **av)
 {
 	t_params	t;
 
+	ft_bzero(&t, sizeof(t));
 	if (parse_args(ac, av, &t))
 		return (1);
-	t.someone_died = false;
 	if (init_forks(&t))
 		return (1);
 	if (init_mutexes(&t))
+	{
+		cleanup(&t);
 		return (1);
+	}
 	if (init_philos(&t))
+	{
+		cleanup(&t);
 		return (1);
+	}
 	if (start_simulation(&t))
 	{
 		cleanup(&t);

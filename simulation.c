@@ -64,6 +64,12 @@ void	*routine(void *arg)
 		if (simulation_end(p))
 			break ;
 		print_state(p, "is thinking");
+		if (p->params->n % 2 != 0)
+		{
+			if (p->params->time_to_eat * 2 > p->params->time_to_sleep)
+				ft_sleep(p->params->time_to_eat * 2 - p->params->time_to_sleep,
+					p->params);
+		}
 	}
 	return (NULL);
 }
@@ -74,8 +80,15 @@ void	*monitor(void *arg)
 	int			i;
 
 	params = (t_params *)arg;
-	while (!params->someone_died)
+	while (1)
 	{
+		pthread_mutex_lock(&params->death_mutex);
+		if (params->someone_died)
+		{
+			pthread_mutex_unlock(&params->death_mutex);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&params->death_mutex);
 		i = 0;
 		while (i < params->n)
 		{

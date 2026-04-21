@@ -52,5 +52,4 @@ void	cleanup(t_params *t)
 	destroy_forks(t);
 	pthread_mutex_destroy(&t->print_mutex);
 	pthread_mutex_destroy(&t->death_mutex);
-	pthread_mutex_destroy(&t->fork_lock);
 }

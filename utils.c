@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	while (n--)
+		*p++ = 0;
+}
+
 unsigned long long	get_time(void)
 {
 	struct timeval	tv;

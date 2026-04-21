@@ -51,12 +51,20 @@ int	init_philos(t_params *t)
 
 void	take_forks(t_philo *p)
 {
-	pthread_mutex_lock(&p->params->fork_lock);
-	pthread_mutex_lock(p->left_fork);
-	print_state(p, "has taken a fork");
-	pthread_mutex_lock(p->right_fork);
-	print_state(p, "has taken a fork");
-	pthread_mutex_unlock(&p->params->fork_lock);
+	if (p->pick_right_first)
+	{
+		pthread_mutex_lock(p->right_fork);
+		print_state(p, "has taken a fork");
+		pthread_mutex_lock(p->left_fork);
+		print_state(p, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(p->left_fork);
+		print_state(p, "has taken a fork");
+		pthread_mutex_lock(p->right_fork);
+		print_state(p, "has taken a fork");
+	}
 }
 
 void	put_forks(t_philo *p)
@@ -69,7 +77,6 @@ void	single_philo_eat(t_philo *p)
 {
 	pthread_mutex_lock(p->left_fork);
 	print_state(p, "has taken a fork");
-	print_state(p, "is eating");
-	ft_sleep(p->params->time_to_eat, p->params);
+	ft_sleep(p->params->time_to_die, p->params);
 	pthread_mutex_unlock(p->left_fork);
 }
