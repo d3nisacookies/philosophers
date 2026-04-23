@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akaung <akaung@student.42.sg>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/12 15:49:51 by akaung            #+#    #+#             */
+/*   Updated: 2026/04/23 00:00:00 by akaung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -45,13 +57,13 @@ unsigned long long	get_time(void);
 void				ft_sleep(unsigned long long time, t_params *params);
 void				print_state(t_philo *p, char *msg);
 int					ft_atoi_philo(const char *str);
-int					should_philo_exit(t_philo *p);
 
 /* sim_utils.c */
 int					simulation_end(t_philo *p);
 void				eat(t_philo *p);
 int					check_philo_death(t_params *params, int i);
 int					check_all_fed(t_params *params);
+int					should_philo_exit(t_philo *p);
 
 /* philos.c */
 int					init_philos(t_params *t);

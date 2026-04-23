@@ -83,18 +83,3 @@ int	ft_atoi_philo(const char *str)
 		return (-1);
 	return (result);
 }
-
-int	should_philo_exit(t_philo *p)
-{
-	if (p->params->must_eat > 0)
-	{
-		pthread_mutex_lock(&p->meal_mutex);
-		if (p->times_eaten >= p->params->must_eat)
-		{
-			pthread_mutex_unlock(&p->meal_mutex);
-			return (1);
-		}
-		pthread_mutex_unlock(&p->meal_mutex);
-	}
-	return (0);
-}

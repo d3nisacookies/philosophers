@@ -93,7 +93,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_mutexes(&t))
 	{
-		cleanup(&t);
+		destroy_forks(&t);
 		return (1);
 	}
 	if (init_philos(&t))
